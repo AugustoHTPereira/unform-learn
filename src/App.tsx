@@ -1,9 +1,9 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import logo from "./logo.svg";
 import "./styles.css";
 
 import { Form } from "@unform/web";
-import { FormHandles, SubmitHandler } from "@unform/core";
+import { FormHandles, FormHelpers, SubmitHandler } from "@unform/core";
 
 import * as Yup from "yup";
 import "./settings/yup-locale";
@@ -22,9 +22,14 @@ type Todo = {
 
 const App: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
-  const onFormSubmit = async (data: SubmitHandler<Todo>) => {
+  const [todo, setTodo] = useState<Todo[]>([]);
+  const onFormSubmit = async (
+    data: SubmitHandler<Todo>,
+    helper: FormHelpers,
+    event: any
+  ) => {
     try {
-      Yup.object()
+      await Yup.object()
         .shape({
           title: Yup.string().required().label("Título"),
           description: Yup.string().min(20).required().label("Descrição"),
@@ -32,7 +37,19 @@ const App: React.FC = () => {
         })
         .validateSync(data, { abortEarly: false });
 
-      console.log(data);
+      setTodo([
+        ...todo,
+        {
+          createdAt: new Date(),
+          title: formRef.current?.getFieldValue("title"),
+          description: formRef.current?.getFieldValue("description"),
+          id: "fasafa",
+          user: formRef.current?.getFieldValue("user"),
+        },
+      ]);
+
+      helper.reset();
+      formRef.current?.reset();
     } catch (err) {
       const validationErrors: Record<string, string> = {};
       if (err instanceof Yup.ValidationError) {
@@ -62,6 +79,8 @@ const App: React.FC = () => {
 
         <Button.Submit>Enviar</Button.Submit>
       </Form>
+
+      <code>{JSON.stringify(todo)}</code>
     </div>
   );
 };
