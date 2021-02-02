@@ -17,12 +17,17 @@
 
 .App {
   width: 100%;
-  max-width: 960px;
   background-color: var(--bg-color);
 
   margin: 0 auto;
   font-family: Arial, Helvetica, sans-serif;
   padding: 0 15px;
+}
+
+.App main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 30px;
 }
 
 .App .App-header {
