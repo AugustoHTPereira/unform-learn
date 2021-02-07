@@ -51,13 +51,7 @@ const Unform: React.FC = () => {
         },
       ]);
 
-      formRef.current?.clearField("title");
-      formRef.current?.clearField("description");
-      const fieldRef = formRef.current!.getFieldRef("user");
-      fieldRef.clearValue();
-
       helper.reset(form);
-      formRef.current?.reset(form);
     } catch (err) {
       const validationErrors: Record<string, string> = {};
       if (err instanceof Yup.ValidationError) {

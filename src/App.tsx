@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import Unform from "./components/Unform";
 import logo from "./logo.svg";
 import "./styles.css";

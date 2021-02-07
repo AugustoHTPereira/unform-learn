@@ -18,6 +18,7 @@ const InputText: React.FC<Props> = (props) => {
       name: fieldName,
       getValue: (ref) => ref.value,
       ref: ref.current,
+      clearValue: (ref) => (ref.value = ""),
     });
   }, [fieldName, registerField]);
 
